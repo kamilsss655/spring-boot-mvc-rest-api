@@ -35,6 +35,11 @@ public class UsersController {
 		return usersRepository.findOne(userId);
 	}
 
+	@GetMapping("users/search/{email:.+}")
+	public List<User> show(@PathVariable String email) {
+		return usersRepository.findByEmailContainingIgnoreCase(email);
+	}
+
 	@PostMapping("users")
 	public User create(@RequestBody User user) {
 		return usersRepository.save(user);
