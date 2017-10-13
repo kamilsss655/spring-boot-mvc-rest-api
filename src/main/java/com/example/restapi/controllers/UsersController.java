@@ -14,15 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.restapi.models.User;
 import com.example.restapi.repositories.UsersRepository;
+import com.example.restapi.services.UsersService;
 
 @RestController
 @RequestMapping("/")
 public class UsersController {
 	private UsersRepository usersRepository;
+	private UsersService usersService;
 
 	@Autowired
-	private UsersController(UsersRepository usersRepository) {
+	private UsersController(UsersRepository usersRepository, UsersService usersService) {
 		this.usersRepository = usersRepository;
+		this.usersService = usersService;
 	}
 
 	@GetMapping("users")
@@ -42,7 +45,7 @@ public class UsersController {
 
 	@PostMapping("users")
 	public User create(@RequestBody User user) {
-		return usersRepository.save(user);
+		return usersService.addUser(user);
 	}
 
 	@PutMapping("/user/{userId}")

@@ -1,5 +1,6 @@
 package com.example.restapi.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import org.hibernate.validator.constraints.Email;
@@ -29,9 +31,12 @@ public class User {
 	private Long id;
 	@NotNull
 	@Email
+	@Column(unique=true)
 	private String email;
 	private String firstName;
 	private String lastName;
+//	Yes I know storing password in plain-text is bad, this project purpose is just to explore Spring though
+	@JsonIgnore
 	private String password;
 	@OneToMany(mappedBy = "user")
 	@JsonManagedReference
