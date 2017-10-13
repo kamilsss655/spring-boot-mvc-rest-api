@@ -4,6 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Book {
@@ -15,6 +20,10 @@ public class Book {
 	private String title;
 	private String author;
 	private String description;
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	@JsonBackReference
+	private User user;
 
 	public Long getId() {
 		return id;
@@ -63,4 +72,13 @@ public class Book {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }
