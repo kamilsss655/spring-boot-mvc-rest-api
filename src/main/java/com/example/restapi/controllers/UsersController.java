@@ -23,6 +23,7 @@ public class UsersController {
 	private UsersService usersService;
 
 	@Autowired
+//	TODO Remove usersRepository and replace all with usersService
 	private UsersController(UsersRepository usersRepository, UsersService usersService) {
 		this.usersRepository = usersRepository;
 		this.usersService = usersService;
