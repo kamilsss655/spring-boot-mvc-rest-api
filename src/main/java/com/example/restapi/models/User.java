@@ -33,16 +33,20 @@ public class User {
 	private Long id;
 	@NotNull
 	@Email
-	@Column(unique=true)
+	@Column(unique = true)
 	private String email;
 	private String firstName;
 	private String lastName;
-//	Yes I know storing password in plain-text is bad, this project purpose is just to explore Spring though
+	// Yes I know storing password in plain-text is bad, this project purpose is
+	// just to explore Spring though
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	@OneToMany(mappedBy = "user")
 	@JsonManagedReference
 	private List<Book> books;
+	@OneToMany(mappedBy = "user")
+	@JsonManagedReference
+	private List<Token> tokens;
 
 	public Long getId() {
 		return id;
@@ -111,6 +115,14 @@ public class User {
 
 	public void setBooks(List<Book> books) {
 		this.books = books;
+	}
+
+	public List<Token> getTokens() {
+		return tokens;
+	}
+
+	public void setTokens(List<Token> tokens) {
+		this.tokens = tokens;
 	}
 
 }
