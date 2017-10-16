@@ -19,29 +19,20 @@ import com.example.restapi.models.User;
 import com.example.restapi.params.SignInParam;
 import com.example.restapi.repositories.TokenRepository;
 import com.example.restapi.repositories.UsersRepository;
+import com.example.restapi.services.AuthenticationService;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
-	private UsersRepository usersRepository;
-	private TokenRepository tokenRepository;
-	private TokenGenerator tokenGenerator;
+	private AuthenticationService authenticationService;
 
 	@Autowired
-	public AuthenticationController(UsersRepository usersRepository, TokenRepository tokenRepository,
-			TokenGenerator tokenGenerator) {
-		this.usersRepository = usersRepository;
-		this.tokenRepository = tokenRepository;
-		this.tokenGenerator = tokenGenerator;
+	public AuthenticationController(AuthenticationService authenticationService) {
+		this.authenticationService = authenticationService;
 	}
 
 	@PostMapping("/sign_in")
 	public Token update(@RequestBody SignInParam param) {
-		User user = usersRepository.findByEmailAndPassword(param.getEmail(), param.getPassword());
-	    if (user == null) throw new InvalidCredentialsException();
-	    Token token = new Token();
-	    token.setUser(user);
-	    token.setKey(tokenGenerator.getToken(25));
-	    return tokenRepository.save(token);
+	    return authenticationService.signIn(param);
 	}
 }

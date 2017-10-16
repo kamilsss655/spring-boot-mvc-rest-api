@@ -6,16 +6,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TokenGenerator {
-	private Integer length;
 
-	public String getToken(Integer length) {
+	public static String getToken(Integer length) {
 		Integer defaultLength = 20;
 		length = length != null ? length : defaultLength;
-		this.length = length;
-		char[] chars = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()".toCharArray();
+		char[] chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_!-".toCharArray();
 		StringBuilder sb = new StringBuilder();
 		Random random = new Random();
-		for (int i = 0; i < this.length; i++) {
+		for (int i = 0; i < length; i++) {
 			char c = chars[random.nextInt(chars.length)];
 			sb.append(c);
 		}
